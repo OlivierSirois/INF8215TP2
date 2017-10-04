@@ -45,7 +45,7 @@ son(X, Y)      :- man(X), parent(Y, X).
 mother(X, Y) :- woman(X), child(Y, X).
 father(X, Y) :- man(X), child(Y, X).
 
-% Uncle Aunt
+% Uncle, aunt
 uncle(X, Y) :- man(X), brother(X, Z), parent(Z, Y). 
 aunt(X, Y)  :- woman(X), sister(X, Z), parent(Z, Y).
 
@@ -59,7 +59,7 @@ grand_child(X, Y)    :- grand_parent(Y, X).
 grand_daughter(X, Y) :- woman(X), grand_parent(Y, X).
 grand_son(X, Y)      :- man(X), grand_parent(Y, X).
 
-% Sibling
+% Siblings, nephew, niece
 nephew(X, Y)  :- son(X, Z), brother(Y, Z);sister(Y, Z).
 niece(X, Y)   :- daughter(X, Z), brother(Y, Z);sister(Y, Z).
 brother(X, Y) :- man(X), parent(Z, X), parent(Z, Y).
