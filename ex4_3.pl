@@ -10,17 +10,23 @@ max3(X,Y,Z,X) :- X>=Y,X>=Z.
 max3(X,Y,Z,Y) :- Y>=X,Y>=Z.
 max3(X,Y,Z,Z) :- Z>=X,Z>=Y.
 
-% 3. d(F, X, G) - separate each case ?
+% 3. d(F, X, G)
 
-% dC/dx = 0
+% df/dx = dC/dx = 0
 d(C, X, 0) :- atomic(C).   
 
-% dx/dx = 1
+% df/dx = dx/dx = 1
 d(X, X, 1).
 
-% du/dx + du/dx 
+% df/dx = u*dv/dx + v*du/dx
+d(U+V, X, P+Q) :- d(U, X, P), d(V, X, Q).
+d(U-V, X, P-Q) :- d(U, X, P), d(V, X, Q).
+ 
+% df/dx = d(x^b)/dx = b*x^(b-1)
+d(X^N, X, N*X^(N-1)). % :- R=N*X^(N-1).  
 
-% u*dv/dx + v*du/dx
+% c*df/dx
+d(C*X, X, C).
 
-% d(x^b)/dx = b*x^(b-1)
-
+% C*df/dx = C*d(x^b)/dx = C*b*x^(b-1)
+d(C*X^N, X, C*N*X^(N-1)). % :- R=C*N*X^(N-1).  
