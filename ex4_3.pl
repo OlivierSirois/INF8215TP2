@@ -2,13 +2,14 @@
 sum(X, Y, R) :- R is Y+X.
 
 % 2. M = max(X, Y) 
+
 max2(X,X,X).
 max2(X,Y,X) :- X>Y.
 max2(X,Y,Y) :- Y>X.
-max3(X,X,X,X).
-max3(X,Y,Z,X) :- X>=Y,X>=Z.
-max3(X,Y,Z,Y) :- Y>=X,Y>=Z.
-max3(X,Y,Z,Z) :- Z>=X,Z>=Y.
+max2(X,X,X,X).
+max2(X, Y, Z, X) :- max2(Z, Y, R), max2(R, X, X), !.
+max2(X, Y, Z, Y) :- max2(X, Z, R), max2(R, Y, Y), !.
+max2(X, Y, Z, Z) :- max2(X, Y, R), max2(R, Z, Z), !. 
 
 % 3. d(F, X, G)   
 
