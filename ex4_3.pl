@@ -14,7 +14,7 @@ max2(X, Y, Z, Z) :- max2(X, Y, R), max2(R, Z, Z), !.
 % 3. d(F, X, G)   
 
 % df/dx = dC/dx = 0
-d(C, X, 0) :- atomic(C), !.   
+d(C, X, 0) :- atomic(C).   
 
 % df/dx = dx/dx = 1
 d(X, X, 1).
@@ -24,11 +24,10 @@ d(U+V, X, P+Q) :- d(U, X, P), d(V, X, Q).
 d(U-V, X, P-Q) :- d(U, X, P), d(V, X, Q).
  
 % df/dx = d(x^b)/dx = b*x^(b-1)
-d(X^N, X, N*X^(N-1)). % :- R=N*X^(N-1).  
+d(X^N, X, R) :- R=N*X^(N-1).  
+
+% c*df/dx
+d(C*X, X, C).
 
 % C*df/dx = C*d(x^b)/dx = C*b*x^(b-1)
-d(C*X^N, X, C*N*X^(N-1)) :- atomic(C), atomic(N), !.
-
-% c*df/dx = c
-d(C*X, X, C) :- atomic(C), !.
- 
+d(C*X^N, X, R) :- R=C*N*X^(N-1). 
