@@ -25,24 +25,25 @@ max2(X, Y, Z, Z) :- max2(X, Y, R), max2(R, Z, Z), !.
 % ----------------------------------------------------------------------
 
 % Regle dx/dx = 1. 
-d(X, X, 1) :- !.
+d(X, X, 1) :- !. % eviter back-chaining
 
 % Regle constante dC/dx = 0
-d(C, X, 0) :- atomic(C).   
+d(C, X, 0) :- atomic(C). %, C\=X.    
 
 % Regle somme d(u+v)/dx = du/dx + dv/dx
-d(U+V, X, P+Q) :- d(U, X, P), d(V, X, Q).
-d(U-V, X, P-Q) :- d(U, X, P), d(V, X, Q).
+d(U+V, X, R) :- d(U, X, P), d(V, X, Q), R = P + Q.
+d(U-V, X, R) :- d(U, X, P), d(V, X, Q), R = P - Q.
 
 % Regle produit de c*df/dx 
-d(C*Z, X, R) :- atomic(C), C \= X, d(Z, X, Y), R = C*Y, !.   
-
-% Regle produit de d(u*v) = v*du/dx +  u*dv/dx
-d(U*V, X, R) :- d(U, X, P), d(V, X, Q), R = V*P + U*Q.   
-
-% Regle division de d(u/v) = (v*du/dx -  u*dv/dx)/g^2
-d(U/V, X, R) :- d(U, X, P), d(V, X, Q), R = (V*P - U*Q)/(V^2).
+d(C*Z, X, R) :- atomic(C), d(Z, X, Y), R = C*Y, !. % eviter back-chaining
 
 % Regle d(X^b)/dx = b*X^(b-1)
-d(Z^N, X, R) :- atomic(N), C\=X, d(Z, X, Y), R = N*Y*Z^(N-1).  
+d(Z^N, X, R) :- atomic(N), d(Z, X, Y), R = N*Y*Z^(N-1).  
+
+% ---------------------------------------------------------------------
+% Regle produit de d(u*v) = v*du/dx +  u*dv/dx
+% d(U*V, X, R) :- d(U, X, P), d(V, X, Q), R = V*P + U*Q.   
+
+% Regle division de d(u/v) = (v*du/dx -  u*dv/dx)/g^2
+% d(U/V, X, R) :- d(U, X, P), d(V, X, Q), R = (V*P - U*Q)/(V^2).
 
