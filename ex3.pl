@@ -1,10 +1,17 @@
+
+% -----------------------------------------------------------------------
+% Excercise 3 : Arbre genealogique 
+% -----------------------------------------------------------------------
+
+% -----------------------------------------------------------------------
 % Relations
+% -----------------------------------------------------------------------
 man(hugo).
 man(gabriel).
 man(loic).
-man(maxime). % ?
-man(mathieu)
-man(alexis)
+man(maxime).
+man(mathieu). 
+man(alexis),
 woman(rose).
 woman(emma).
 woman(justine).
@@ -13,12 +20,14 @@ woman(catherine).
 woman(lea).
 
 % Hugo  Catherine
+
 parent(hugo, lea).
 parent(catherine, lea).
 parent(hugo, gabriel).
 parent(catherine, gabriel).
 
-% Loic Justine
+% Loic et Justine
+
 parent(loic, alice).
 parent(justine, alice).
 parent(loic, maxime).
@@ -27,6 +36,7 @@ parent(loic, mathieu).
 parent(justine, mathieu).
 
 % Gabriel et Alice
+
 parent(gabriel, alexis).
 parent(alice, alexis).
 parent(gabriel, rose).
@@ -34,7 +44,9 @@ parent(alice, rose).
 parent(gabriel, emma).
 parent(alice, emma).
 
+% -----------------------------------------------------------------------
 % Rules
+% -----------------------------------------------------------------------
 
 % Kids
 child(X, Y)    :- parent(Y, X).
@@ -64,8 +76,3 @@ nephew(X, Y)  :- son(X, Z), brother(Y, Z);sister(Y, Z).
 niece(X, Y)   :- daughter(X, Z), brother(Y, Z);sister(Y, Z).
 brother(X, Y) :- man(X), parent(Z, X), parent(Z, Y).
 sister(X, Y)  :- woman(X), parent(Z, X), parent(Z, Y). 
-
-
-
-
-
