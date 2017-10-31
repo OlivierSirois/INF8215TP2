@@ -40,10 +40,4 @@ d(C*Z, X, R) :- atomic(C), d(Z, X, Y), R = C*Y, !. % eviter back-chaining
 % Regle d(X^b)/dx = b*X^(b-1)
 d(Z^N, X, R) :- atomic(N), d(Z, X, Y), R = N*Y*Z^(N-1).  
 
-% ---------------------------------------------------------------------
-% Regle produit de d(u*v) = v*du/dx +  u*dv/dx
-% d(U*V, X, R) :- d(U, X, P), d(V, X, Q), R = V*P + U*Q.   
-
-% Regle division de d(u/v) = (v*du/dx -  u*dv/dx)/g^2
-% d(U/V, X, R) :- d(U, X, P), d(V, X, Q), R = (V*P - U*Q)/(V^2).
-
+% ----------------------------------------------------------------------
