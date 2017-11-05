@@ -13,8 +13,8 @@ sum(X, Y, R) :- R is Y + X.
 % ----------------------------------------------------------------------
 
 max2(X,X,X).
-max2(X,Y,X) :- X>Y.
-max2(X,Y,Y) :- Y>X.
+max2(X,Y,X) :- X>Y, !.
+max2(X,Y,Y) :- Y>X, !.
 max2(X,X,X,X).
 max2(X, Y, Z, X) :- max2(Z, Y, R), max2(R, X, X), !.
 max2(X, Y, Z, Y) :- max2(X, Z, R), max2(R, Y, Y), !.
@@ -24,20 +24,20 @@ max2(X, Y, Z, Z) :- max2(X, Y, R), max2(R, Z, Z), !.
 % Exercise 4.3.3 : obtenir la derivee d(F, X, G)   
 % ----------------------------------------------------------------------
 
-% Regle dx/dx = 1. 
+% Regle d’une fonction identité f(x)=x -> f’(x)=x’=1  
 d(X, X, 1) :- !. % eviter back-chaining
 
-% Regle constante dC/dx = 0
-d(C, X, 0) :- atomic(C). %, C\=X.    
+% Règle d’une fonction constante f(x)=c -> f’(x)=C’=0
+d(C, X, 0) :- atomic(C), C\=X.    
 
-% Regle somme d(u+v)/dx = du/dx + dv/dx
-d(U+V, X, R) :- d(U, X, P), d(V, X, Q), R = P + Q.
-d(U-V, X, R) :- d(U, X, P), d(V, X, Q), R = P - Q.
+% Regle de somme f(x) + g(x) -> f´(x) + g´(x)
+d(F+G, X, R) :- d(F, X, P), d(G, X, Q), R = P + Q.
+d(F-G, X, R) :- d(F, X, P), d(G, X, Q), R = P - Q.
 
-% Regle produit de c*df/dx 
-d(C*Z, X, R) :- atomic(C), d(Z, X, Y), R = C*Y, !. % eviter back-chaining
+% Regle de produit f(x) = c*x -> f´(x)=c*x´ 
+d(C*F, X, R) :- atomic(C), d(F, X, Y), R = C*Y, !. % eviter back-chaining
 
-% Regle d(X^b)/dx = b*X^(b-1)
-d(Z^N, X, R) :- atomic(N), d(Z, X, Y), R = N*Y*Z^(N-1).  
+% Regle d une fonction f(x)=x^n -> f´(x)=n*x^(n-1)
+d(F^N, X, R) :- atomic(N), d(F, X, Y), R = N*Y*F^(N-1).  
 
 % ----------------------------------------------------------------------
