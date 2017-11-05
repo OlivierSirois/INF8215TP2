@@ -11,7 +11,7 @@ man(gabriel).
 man(loic).
 man(maxime).
 man(mathieu). 
-man(alexis),
+man(alexis).
 woman(rose).
 woman(emma).
 woman(justine).
