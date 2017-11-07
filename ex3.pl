@@ -56,12 +56,13 @@ son(X, Y)      :- man(X), parent(Y, X).
 % Parents
 mother(X, Y) :- woman(X), child(Y, X).
 father(X, Y) :- man(X), child(Y, X).
-brother(X, Y) :- man(X), parent(Z, X), parent(Z, Y),X\=Y.
-sister(X, Y)  :-  woman(X), parent(Z, X), parent(Z, Y), X\=Y. 
+
+brother(X, Y) :- man(X), father(Z, X), father(Z, Y),X\=Y.
+sister(X, Y)  :-  woman(X), father(Z, X), father(Z, Y), X\=Y. 
 % Uncle, aunt
-uncle(X, Y) :- parent(Z,Y),brother(X, Z). 
-%uncle(X, Y) :- father(Z, Y), brother(X, Z). 
-aunt(X, Y)  :-  sister(X, Z), parent(Z, Y).
+uncle(X, Y) :- (father(Z,Y);mother(Z,Y)),brother(X, Z). 
+
+aunt(X, Y)  :-  (father(Z,Y);mother(Z,Y)),sister(X, Z).
 
 % Grandparents
 grand_parent(X, Y) :- child(Y, Z), parent(X, Z).
