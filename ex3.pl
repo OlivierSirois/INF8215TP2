@@ -56,10 +56,12 @@ son(X, Y)      :- man(X), parent(Y, X).
 % Parents
 mother(X, Y) :- woman(X), child(Y, X).
 father(X, Y) :- man(X), child(Y, X).
-
+brother(X, Y) :- man(X), parent(Z, X), parent(Z, Y),X\=Y.
+sister(X, Y)  :-  woman(X), parent(Z, X), parent(Z, Y), X\=Y. 
 % Uncle, aunt
-uncle(X, Y) :- man(X), brother(X, Z), parent(Z, Y). 
-aunt(X, Y)  :- woman(X), sister(X, Z), parent(Z, Y).
+uncle(X, Y) :- parent(Z,Y),brother(X, Z). 
+%uncle(X, Y) :- father(Z, Y), brother(X, Z). 
+aunt(X, Y)  :-  sister(X, Z), parent(Z, Y).
 
 % Grandparents
 grand_parent(X, Y) :- child(Y, Z), parent(X, Z).
@@ -72,7 +74,9 @@ grand_daughter(X, Y) :- woman(X), grand_parent(Y, X).
 grand_son(X, Y)      :- man(X), grand_parent(Y, X).
 
 % Siblings, nephew, niece
-nephew(X, Y)  :- son(X, Z), brother(Y, Z);sister(Y, Z).
-niece(X, Y)   :- daughter(X, Z), brother(Y, Z);sister(Y, Z).
-brother(X, Y) :- man(X), parent(Z, X), parent(Z, Y).
-sister(X, Y)  :- woman(X), parent(Z, X), parent(Z, Y). 
+
+nephew(X, Y)  :- brother(Y, Z), son(X, Z). 
+nephew(X, Y)  :- sister(Y, Z),son(X, Z).
+niece(X, Y)   :- daughter(X, Z), brother(Y, Z).
+niece(X, Y)   :- daughter(X, Z), sister(Y, Z).
+
